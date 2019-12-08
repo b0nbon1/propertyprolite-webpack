@@ -23,12 +23,8 @@
   },
   "jest": {
     "setupFiles": [
-      "./src/setupTests.js"
-    ],
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
-      "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
-    }
+      "./src/setUpTests.js"
+    ]
   },
   "dependencies": {
     "@babel/runtime": "^7.4.5",
@@ -62,13 +58,15 @@
     "babel-polyfill": "^6.26.0",
     "coveralls": "^3.0.4",
     "css-loader": "1.0.0",
-    "enzyme": "^3.9.0",
-    "enzyme-adapter-react-16": "^1.13.0",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.15.1",
     "enzyme-to-json": "^3.3.5",
     "jest": "^24.8.0",
     "nock": "^10.0.6",
+    "react-test-renderer": "^16.12.0",
     "redux-mock-store": "^1.5.3",
     "style-loader": "0.23.0",
+    "url-loader": "^3.0.0",
     "webpack": "4.19.1",
     "webpack-cli": "^3.3.2",
     "webpack-dev-server": "^3.3.1"

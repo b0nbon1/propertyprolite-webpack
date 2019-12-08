@@ -14,13 +14,13 @@ import { Form, Control } from "react-redux-form";
 import { connect } from "react-redux";
 import { Redirect } from "react-router";
 
-import { signIn } from "../store/actions/signinAction";
+import { signUp } from "../store/actions/signupActions";
 import { loadingAction } from "../store/actions/loadingActions";
 
-export class Signin extends Component {
+export class Signup extends Component {
   handleSubmit(data) {
     this.props.loadingAction();
-    this.props.signIn(data);
+    this.props.signUp(data);
   }
 
   renderLoading() {
@@ -32,11 +32,11 @@ export class Signin extends Component {
           <Col sm="12" md={{ size: 4, offset: 4 }}>
             <div className="p-5 my-2 rounded">
               <Toast data-test="error-test">
-                <ToastHeader>Login Failed</ToastHeader>
+                <ToastHeader>Signup Failed</ToastHeader>
                 <ToastBody>
                   <p>Please check your credentials and try again</p>
                   <p className="text-danger">{this.props.error}</p>
-                  <a href="/signin/">Go Back</a>
+                  <a href="/signup/">Go Back</a>
                 </ToastBody>
               </Toast>
             </div>
@@ -56,11 +56,41 @@ export class Signin extends Component {
       <Row>
         <Col sm="12" md={{ size: 4, offset: 4 }}>
           <Form
-            model="signin"
+            model="signup"
             className="pt-5"
             onSubmit={data => this.handleSubmit(data)}
             data-test="form-test"
           >
+            <FormGroup>
+              <Label for="firstname">First Name</Label>
+              <Control.text
+                className="form-control"
+                model="signin.firstname"
+                type="text"
+                placeholder="First Name"
+                required
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="lastname">Last Name</Label>
+              <Control.text
+                type="text"
+                placeholder="Last Name"
+                model="signin.lastname"
+                className="form-control"
+                required
+              />
+            </FormGroup>
+            <Label for="phone">Phone Number</Label>
+            <FormGroup>
+              <Control.text
+                type="tel"
+                placeholder="34545435"
+                model="signin.phonenumber"
+                className="form-control"
+                required
+              />
+            </FormGroup>
             <FormGroup>
               <Label for="email">Email</Label>
               <Control.text
@@ -81,7 +111,7 @@ export class Signin extends Component {
                 required
               />
             </FormGroup>
-            <Button>Sign in</Button>
+            <Button>Sign up</Button>
           </Form>
         </Col>
       </Row>
@@ -96,12 +126,12 @@ export class Signin extends Component {
 }
 
 const mapStateToProps = state => ({
-  isSignedIn: state.signin.islogged,
+  isSignedIn: state.signUp.isSignedIn,
   loading: state.loading.loading,
   error: state.error.error
 });
 
 export default connect(
   mapStateToProps,
-  { signIn, loadingAction }
-)(Signin);
+  { signUp, loadingAction }
+)(Signup);

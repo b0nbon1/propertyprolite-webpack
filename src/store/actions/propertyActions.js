@@ -6,7 +6,7 @@ export const fetchProperties = () => dispatch => {
   axios
     .get("https://property-prolite2.herokuapp.com/api/v2/properties")
     .then(res => {
-      const properties = res.data.data;
+      const properties = res.data;
       dispatch({
         type: FETCH_PROPERTIES,
         payload: properties
