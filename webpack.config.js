@@ -1,33 +1,46 @@
 const path = require("path");
 const webpack = require("webpack");
+const webpackMerge = require("webpack-merge");
+const modeConfiguration = env => require(`./build-utils/webpack.${env}`)(env);
 
-module.exports = {
-  entry: "./src/index.js",
-  mode: "development",
-  module: {
-    rules: [
-      {
-        test: /\.(js|jsx)$/,
-        exclude: /(node_modules|bower_components)/,
-        loader: "babel-loader",
-        options: { presets: ["@babel/env"] }
-      },
-      {test : /\.css$/, use:['style-loader', 'css-loader']},
-      {test: /\.(jpg|png)$/, use: { loader: 'url-loader'},}
-    ]
-  },
-  resolve: { extensions: ["*", ".js", ".jsx"] },
-  output: {
-    path: path.resolve(__dirname, "dist/"),
-    publicPath: "/dist/",
-    filename: "bundle.js"
-  },
-  devServer: {
-    contentBase: path.join(__dirname, "public/"),
-    port: 3000,
-    publicPath: "http://localhost:3000/dist/",
-    historyApiFallback: true,
-    hotOnly: true
-  },
-  plugins: [new webpack.HotModuleReplacementPlugin()]
+module.exports = ({ mode } = { mode: "production" }) => {
+    console.log(`mode is: ${mode}`);
+
+    return webpackMerge(
+        {
+            mode,
+            entry: "./src/index.js",
+            devServer: {
+              contentBase: path.join(__dirname, "public/"),
+              port: 3000,
+              publicPath: "http://localhost:3000/dist/",
+              historyApiFallback: true,
+              hotOnly: true,
+              watchContentBase: true,
+              watchOptions: {
+                poll: true
+              },
+              open: true
+            },
+            resolve: { extensions: ["*", ".js", ".jsx"] },
+            output: {
+              path: path.resolve(__dirname, "dist/"),
+              publicPath: "/dist/",
+              filename: "bundle.js"
+            },
+            module: {
+                rules: [
+                    {
+                        test: /\.(js|jsx)$/,
+                        exclude: /node_modules/,
+                        loader: "babel-loader"
+                    }
+                ]
+            },
+            plugins: [
+                new webpack.HotModuleReplacementPlugin()
+            ]
+        },
+        modeConfiguration(mode)
+    );
 };
